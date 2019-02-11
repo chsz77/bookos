@@ -15,7 +15,7 @@ class AuthController extends Controller
     
     public function signin(Request $request)
     {
-        $key = "helloworld";
+        $key = env('SECRET_KEY');
         $username = $request->input("username");
         $password = crypt($request->input("password"), $key);
         $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
@@ -27,7 +27,7 @@ class AuthController extends Controller
     
     public function signup(Request $request)
     {
-        $key = "helloworld";
+        $key = env('SECRET_KEY');
         $username = $request->input('username');
         $password = $request->input("password");
         if(!empty($password)){

@@ -59,6 +59,7 @@ class AuthForm extends Component{
             let token = res.data.data
             if(token){
               localStorage.setItem("jwtToken", token);
+              localStorage.setItem("expired", Math.floor(Date.now() / 60000));
               setTimeout(() => this.props.stateUp(), 300)
             }
             if(type==="signup"){

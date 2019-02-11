@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function showReviews(Request $request, $book_id, $limit, $offset)
+    public function showReviews(Request $request, $book_id)
     {
+        $offset = $request->get("offset"); 
         if(!is_null($offset)){
             $offset = " OFFSET " . $offset;
         }
+        $limit = $request->get("limit");
         if(!is_null($limit)){
             $limit = " LIMIT " . $limit;
         }
