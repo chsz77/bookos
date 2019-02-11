@@ -5,7 +5,7 @@ Built with Lumen Laravel, MySQL at the back end and React at front.
 Integrated with Stripe for purchasing with credit card.
 You can use test credit card number:
 42424242424242424.
-Just press 42 until very end.
+Just insert 42 until very end.
 
 Under development.
 
