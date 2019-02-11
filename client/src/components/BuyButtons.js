@@ -21,7 +21,6 @@ class BuyButtons extends Component{
           let status = res.data.status
           if(status === "success"){
             if(buy === "buy"){
-              console.log(this.props.history)
               this.props.history.push("/checkout")
             } else {
             this.setState({cartAdded: true, spinAdd: false})}
@@ -29,7 +28,10 @@ class BuyButtons extends Component{
           }
         })
         .catch(()=> this.setState({spinAdd: false, spinBuy: false}))
+      } else {
+        this.props.history.push("/signup")
       }
+      
   }
   
   dismissNotif = () => {

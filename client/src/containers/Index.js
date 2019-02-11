@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Button } from 'reactstrap';
+import { Container, Button, Row } from 'reactstrap';
 import { Link } from "react-router-dom";
 import BookRow from "../components/BookRow"
 import BookSlide from "../components/BookSlide"
+import Carousel from "../components/Carousel"
 
 class Index extends Component {
   state = {loading: true}
@@ -24,7 +25,7 @@ class Index extends Component {
     
     let bookRows = this.rowsData.map( row => (
         <div key={row.title} >
-        <Link to={`/books/browse?type=${row.type}`}><h4>{row.title}</h4></Link>
+        <Row><h4>{row.title}</h4><Link className="px-2 pt-2"to={`/books/browse?type=${row.type}`}><small>more</small></Link></Row>
         <BookRow limit="12" column="2" scrollLeft 
         key={row.title}
         rowstyle={rowstyle} 
@@ -37,7 +38,7 @@ class Index extends Component {
     
     return (
       <div>
-        <div  className="bg-image"/>
+        <Carousel />
         <div className="bg-overlay" />
         <div className="welcome"/>
         <Container>

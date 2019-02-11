@@ -33,8 +33,6 @@ class BookRow extends Component {
       keyword = queryString.parse(this.props.location.search).keyword
     }
     
-    console.log(this.props.keyword)
-    
     keyword ? (keyword = `&keyword=${keyword}`) : (keyword = "")
     
     this.setState({loading: true})

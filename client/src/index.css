@@ -14,6 +14,10 @@ button{
   box-shadow: none!important
 }
 
+.navbar-brand {
+  color: white!important;
+}
+
 .loader{
   position: fixed;
   top: 0;
@@ -130,23 +134,19 @@ button{
   padding: 15px 20px
 }
 
-.bg-image{
-  background: url('./images/index-image.jpg');
-  height: 70vh;
-  width: 100vw;
-  top: 0;
-  position: absolute;
-  z-index: -2;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center 60%;
+.carousel{
+  position: absolute!important;
+  top: 0!important;
+  left: 0!important;
+  z-index: -9
 }
+
 
 .bg-overlay{
   height: 70vh;
   width: 100vw;
   position: absolute;
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.1);
   z-index: -1;
   top: 0;
 }
@@ -156,7 +156,7 @@ button{
   
 }
 .searchbar{
-  max-width: 900px;
+  max-width: 830px;
   border: none!important;
   flex-grow: 0.7;
   
@@ -193,7 +193,6 @@ button{
 }
 
 .suggestion {
-  /*background: blue;*/
   position: absolute;
   width: 830px;
   max-height: 250px;
@@ -452,7 +451,7 @@ button{
   bottom: 20px;
   right: 20px;
   background: white;
-  box-shadow: 0 2px 10px lightgrey;
+  box-shadow: 0 10px 20px 5px lightgrey;
   width: 20vw;
   height: 80px;
   opacity: 0;
@@ -480,8 +479,6 @@ button{
 }
 
 .payment-details{
-  top: 20px;
-  position: fixed;
   font-size: 0.9rem;
 }
 
@@ -587,19 +584,30 @@ button{
 
 .footer{
     margin-top: 20px;
-    background: beige;
+    background: #fafafa;
     text-align: right;
-    padding: 50px 70px 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px;
+    color: #aeaeae;
 }
 
-.footer div div{
-  font-size: 14px;
+.footer .contact{
+  display: flex;
+  font-weight: bold;
 }
+
+.footer .contact div{
+  padding: 0 10px;
+}
+
+/*.footer div div{*/
+/*  font-size: 14px;*/
+/*}*/
 
 .footer .icons {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 2rem;
+  font-size: 1.7rem;
 }
 
 .footer .icons i{
@@ -607,10 +615,8 @@ button{
 }
 
 .footer .sign {
-  position: absolute;
-  margin-top: 60px;
-  right: 70px;
-  font-size: 14px
+  font-size: 14px;
+  float: left;
 }
 
 .checkout-form {
@@ -625,6 +631,8 @@ button{
 
 .checkout-form textarea{
   font-size: 0.9rem!important;
+  border-radius: 0;
+  box-shadow: none!important
 }
 
 .checkout-wait span{

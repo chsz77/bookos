@@ -10,6 +10,8 @@ import Book from '../components/Book'
 import Waypoint from 'react-waypoint'
 import Spinner from '../components/Spinner'
 import { Link } from "react-router-dom";
+import Loader from "./Loader"
+
 
 
 class Browser extends Component {
@@ -25,7 +27,11 @@ class Browser extends Component {
   }
   
   fetchBooks = () => {
-    window.scrollTo(0, 0)
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
     let keyword = queryString.parse(this.props.location.search).keyword || ""
     let type = queryString.parse(this.props.location.search).type || "created_at"
     this.setState({sortActive: type, genActive: keyword})
@@ -39,7 +45,7 @@ class Browser extends Component {
         let books = res.data.data
         this.setState({books, loading:false, offset: 0, spinner: false})
       })
-      .catch(()=>this.setState({spinner: false}))
+      .catch(()=>this.setState({spinner: false, loading: false}))
   }
   
   fetchMoreBooks = () => {
@@ -91,7 +97,10 @@ class Browser extends Component {
       className={sort.type === this.state.sortActive ? "sort-active" : ""} 
       name="type" key={i}>{sort.title}</li>
     ))  
-    let genreData = ["Sci-Fi", "Comedy", "Fantasy", "Action", "Romance", "Drama"]
+    let genreData = ["Sci-Fi", "Comedy", "Fantasy", "Adventure", "War", "Action", "Romance", "Drama", "Mystery", "Horror", "Thriller", 
+      
+    ]
+    
     let genres = genreData.map( (genre, i) => (
       <li value={genre} className={`${genre === this.state.genActive ? "sort-active " : ""}genres-list`}  
       
@@ -106,13 +115,15 @@ class Browser extends Component {
     ))
     
     return (
+      <div>
+        <Loader {...this.props} loading={this.state.loading}/>
       <Container>
         <div className="gen-waypoint">
-          <Waypoint onLeave={() => this.setState({catFixed: true})} onEnter={() => this.setState({catFixed: false})}/>
+          <Waypoint onLeave={() => this.setState({genFixed: true})} onEnter={() => this.setState({genFixed: false})}/>
         </div>
         <Row>
           <Col md="2">
-            <ul className={this.state.catFixed ? "genres-fixed" : "genres"}>
+            <ul className={this.state.genFixed ? "genres-fixed" : "genres"}>
               <h6>Genre</h6>
               <li className="genres-list"><Link to="/books/browse">All</Link></li>
               {genres}
@@ -128,6 +139,8 @@ class Browser extends Component {
             </div>
             <hr/>
             <div className="browser">
+              {!this.state.loading && !this.state.spinner && this.state.books.length === 0 && 
+              <h6 className="text-center mx-auto py-4">Sorry, we dont have that books</h6>}
               {books}
             </div>
           </Col>
@@ -135,7 +148,11 @@ class Browser extends Component {
             <Waypoint onEnter={()=>this.fetchMoreBooks()}/>
           </div>
         </Row>
+        
       </Container>
+        <div style={{height: "200px"}}>
+        </div>
+      </div>
     )
   }
 }

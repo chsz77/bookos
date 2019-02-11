@@ -5,8 +5,8 @@ import {
   ListGroup, 
   ListGroupItem } from 'reactstrap';
 import Waypoint from 'react-waypoint';
-import Rating from 'react-rating'  
-  
+import Rating from 'react-rating';
+import Moment from "react-moment";
 
 class ReviewList extends Component{
   state = {showMore: false}
@@ -15,7 +15,7 @@ class ReviewList extends Component{
     let {review, i} = this.props
     return (
       <ListGroupItem  className="reviews" key={i}>
-        <div><strong>{review.username || "user-placeholder"} &middot; </strong><span>{review.created_at}</span></div>
+        <div><strong>{review.username || "user-placeholder"} &middot; </strong><span><Moment fromNow>{review.created_at}</Moment></span></div>
         <Rating 
           emptySymbol="far fa-star"
           fullSymbol="fas fa-star"
@@ -52,18 +52,19 @@ class Reviews extends Component {
   }
   
   loadMoreReviews = () => {
-    let book_id = this.props.match.params.book_id
-    let offset = this.state.offset + this.state.limit
-    let limit = this.state.limit
-    axios.get(`${API}/reviews/${book_id}/${limit}/${offset}`)
-      .then(res => {
-        let reviews = res.data.data
-        if(reviews.length === 0){
-          this.refs.more.style.display = 'none'
-        }
-        this.setState({reviews: [...this.state.reviews, ...reviews]})
-      })
-    this.setState({offset})
+    if(this.state.reviews.length > 0){
+      let book_id = this.props.match.params.book_id
+      let offset = this.state.offset + this.state.limit
+      let limit = this.state.limit
+      axios.get(`${API}/reviews/${book_id}/${limit}/${offset}`)
+        .then(res => {
+          let reviews = res.data.data
+          if(reviews.length === 0){
+            this.refs.more.style.display = 'none'
+          }
+          this.setState({reviews: [...this.state.reviews, ...reviews], offset})
+        })
+    }
   }
   
   loadReviews(limit, offset){

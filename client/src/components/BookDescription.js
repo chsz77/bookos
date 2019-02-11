@@ -2,8 +2,8 @@ import React from 'react';
 import {
   Col, 
   Row} from 'reactstrap';
-import Rating from 'react-rating'
-  
+import Rating from 'react-rating';
+import Moment from "react-moment";
 
 const BookDescription = props => {
   let {image_url, author, title, synopsis, published_at, rating} = props.book
@@ -21,7 +21,7 @@ const BookDescription = props => {
           readonly
           initialRating={parseFloat(rating)/10} 
           /><span> {(parseFloat(rating)/10).toFixed(1)}</span>
-        <p>{author} &middot; {published_at}</p>
+        <p>{author} &middot; <Moment format="YYYY">{published_at}</Moment></p>
         <hr/>
         <p style={{whiteSpace: 'pre-line'}}>{synopsis}</p>
       </Col>

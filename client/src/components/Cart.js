@@ -23,7 +23,7 @@ class Cart extends Component {
     axios.get(`${API}/users/${user_id}/cart`)
       .then(res => {
         let cart = res.data.data.reverse()
-        if(cart.length > 0 && cart !== this.state.cart){
+        if(cart !== this.state.cart){
           this.setState({cart})
         }
       })

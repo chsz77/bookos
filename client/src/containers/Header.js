@@ -49,7 +49,7 @@ class Header extends Component {
           (solid ? "header-solid" : "header-trans") : 
           "header-solid"}>
           <Row className="w-100 justify-content-between header">
-            <Link className="navbar-brand" to = "/books">Bookos</Link>
+            <Link className="navbar-brand" to = "/books/browse">Bookos</Link>
             <SearchBar {...this.props}/>
             <Row >
               {currentUser.username ? (

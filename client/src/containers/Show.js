@@ -20,6 +20,11 @@ class Show extends Component {
   }
   
   componentDidUpdate(prevProps){
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
     let book_id = this.props.match.params.book_id
     let prevBook_id = prevProps.match.params.book_id
     if(book_id !== prevBook_id){
@@ -56,13 +61,8 @@ class Show extends Component {
               </Col>
               <Col md="3">
                 <BookInfo book={book}/>
-                
-                {this.props.currentUser && this.props.currentUser.user_id && (
-                  <div>
-                  <hr/>
-                  <BuyButtons {...this.props} price={book.price} book_id={book.book_id} currentUser={this.props.currentUser}/>
-                  </div>
-                )}
+                <hr/>
+                <BuyButtons {...this.props} price={book.price} book_id={book.book_id} currentUser={this.props.currentUser}/>
                 <hr/>
                 {book.genre && 
                   <BookRecommendation book_filter={book.book_id}keyword={book.genre}/>  

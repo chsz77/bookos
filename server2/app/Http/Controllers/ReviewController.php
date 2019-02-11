@@ -20,7 +20,7 @@ class ReviewController extends Controller
             FROM reviews 
             LEFT JOIN ratings ON reviews.review_id = ratings.review_id
             LEFT JOIN users ON reviews.user_id = users.user_id
-            WHERE reviews.book_id=$book_id ORDER BY reviews.created_at" . $limit . $offset;
+            WHERE reviews.book_id=$book_id ORDER BY reviews.created_at DESC" . $limit . $offset;
         $result = app('db')->select($sql);
         return response()->json(["data" => $result, "status" => "success"]);
     }

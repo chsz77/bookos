@@ -88,14 +88,21 @@ class UserController extends Controller
             'source' => $token]);
         
         if($charge){
-          $pay_sql = "UPDATE cart_items SET paid=1 WHERE user_id=:user_id";
-          $pay_success = app('db')->update($pay_sql, [":user_id" => $user_id]);  
+          $paidbooks = app('db')->select("SELECT book_id FROM cart_items WHERE paid=0 AND user_id=$user_id");
+          forEach ($paidbooks as $paidbook){
+            $paidbook = $paidbook->book_id;
+            $sql = "UPDATE books SET stock = stock - 1, sold = sold + 1 WHERE book_id=:paidbook";
+            app('db')->update($sql, [":paidbook" => $paidbook]);
+          };
+          
+          $pay_sql = "UPDATE cart_items SET paid=1, pay_id=:token WHERE user_id=:user_id";
+          $pay_success = app('db')->update($pay_sql, [":user_id" => $user_id, ":token" => $token]);  
           
           if($pay_success){
             $data = [
               ":user_id" => $user_id,
               ":ship_cost" => $ship_cost,
-              ":cart_total" => $total,
+              ":cart_total" => $total/100,
               ":ship_address" => $ship_address,
               ":pay_id" => $token
             ];
@@ -106,7 +113,7 @@ class UserController extends Controller
               return response()->json(["status" => "success", "data" => "1"], 200);
             }
             
-        return response()->json(["status" => "failed", "data" => "0"], 400);    
+        return response()->json(["status" => "failed", "data" => 0], 400);    
         };  
     }
         
