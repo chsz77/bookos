@@ -1,5 +1,3 @@
-# bookos
-
 # Go to https://bookos.netlify.com for demo
 
 # Bookos Books Shop
