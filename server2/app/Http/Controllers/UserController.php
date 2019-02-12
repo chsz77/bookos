@@ -46,7 +46,7 @@ class UserController extends Controller
         ];
         
         $new_profile = app('db')->insert($sql, $data);
-        return response()->json(["status" => "success", "data" => "1"], 200);    
+        return response()->json(["status" => "success", "data" => $data], 200);    
         
     }
 
@@ -132,7 +132,7 @@ class UserController extends Controller
         $sql = "DELETE FROM cart_items WHERE user_id=:user_id AND cart_item_id=:cart_item_id";
         $del_cartitem = app('db')->delete($sql, $data);
         if($del_cartitem){
-            return response()->json(["status" => "success", "data" => "1"], 200);
+            return response()->json(["status" => "success", "data" => $cart_item_id], 200);
         }
         return response()->json(["status" => "failed", "data" => "0"], 400);
     }

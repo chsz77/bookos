@@ -78,24 +78,59 @@ class BookController extends Controller
         return response()->json(["data" => $book[0], "rating" => $rating[0], "status" => "success"]);
     }
 
-    public function create(Request $request)
+    public function newBook(Request $request)
     {
-        $Book = Book::create($request->all());
-
-        return response()->json($Book, 201);
+        $sql = 
+            "INSERT INTO books (title, author, synopsis, isbn, published_at, price, stock, image_url, genre) 
+            VALUE (:title, :author, :synopsis, :isbn, :published_at, :price, :stock, :image_url, :genre)";
+        
+        
+        $data = [
+            ":title" => $request->input("title"),
+            ":author" => $request->input("author"),
+            ":synopsis" => $request->input("synopsis"),
+            ":isbn" => $request->input("isbn"),
+            ":published_at" => $request->input("published_at"),
+            ":price" => $request->input("price"),
+            ":stock" => $request->input("stock"),
+            ":image_url" => $request->input("image_url"),
+            ":genre" => $request->input("genre"),
+        ];
+    
+        $new_book = app('db')->insert($sql, $data);
+        
+        return response()->json(["data" => $data, "status"=>"success"], 201);
     }
 
-    public function update($id, Request $request)
+    public function updateBook(Request $request, $book_id)
     {
-        $Book = Book::findOrFail($id);
-        $Book->update($request->all());
+        $sql = "UPDATE books SET title=:title, author=:author, synopsis=:synopsis, 
+            isbn=:isbn, price=:price, stock=:stock, image_url=:image_url, genre=:genre,
+            published_at=:published_at
+            WHERE book_id=:book_id";
 
-        return response()->json($Book, 200);
+         $data = [
+            ":book_id" => $book_id,
+            ":title" => $request->input("title"),
+            ":author" => $request->input("author"),
+            ":synopsis" => $request->input("synopsis"),
+            ":isbn" => $request->input("isbn"),
+            ":published_at" => $request->input("published_at"),
+            ":price" => $request->input("price"),
+            ":stock" => $request->input("stock"),
+            ":image_url" => $request->input("image_url"),
+            ":genre" => $request->input("genre"),
+        ];
+        
+        $updated_book = app('db')->update($sql, $data);
+        
+        return response()->json(["status" => "success", "data" => $data], 201);
     }
 
-    public function delete($id)
+    public function deleteBook($book_id)
     {
-        Book::findOrFail($id)->delete();
-        return response('Deleted Successfully', 200);
+        $sql = "DELETE FROM books WHERE book_id=$book_id";
+        $deleted_book = app('db')->delete($sql);
+        return response()->json(["status" => "success", "data" => $book_id], 201);
     }
 }

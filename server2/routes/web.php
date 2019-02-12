@@ -20,14 +20,14 @@ $router->group(['prefix' => 'api/books'], function () use ($router) {
 
   $router->get('{book_id}', ['uses' => 'BookController@showOneBook']);
 
-  $router->post('/', ['uses' => 'BookController@create']);
+  $router->post('/', ['uses' => 'BookController@newBook']);
 
-  $router->delete('/{book_id}', ['uses' => 'BookController@delete']);
+  $router->delete('/{book_id}', ['uses' => 'BookController@deleteBook']);
 
-  $router->put('/{book_id}', ['uses' => 'BookController@update']);
+  $router->put('/{book_id}', ['uses' => 'BookController@updateBook']);
   
   $router->get('/{book_id}/reviews',  ['uses' => 'ReviewController@showReviews']);
-  $router->post('/{book_id/reviews', ['uses' => 'BookController@createReviews']);
+  $router->post('/{book_id}/reviews/{user_id}', ['uses' => 'ReviewController@createReview']);
 });
 
 $router->group(['middleware' => 'auth', 'prefix' => 'api/users'], function () use ($router) {
