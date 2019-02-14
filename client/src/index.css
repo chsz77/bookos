@@ -47,8 +47,6 @@ button{
   border: none!important;
   border-radius: 0!important;
   box-shadow: 0 10px 20px 5px lightgrey;
-
-  
 }
 
 .checkout-modal h6{
@@ -527,6 +525,20 @@ button{
   background: #999; 
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  visibility: hidden;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #999; 
+}
+
+
 .showcase {
   opacity: 0;
   animation: 7s slidefade 0s forwards;
@@ -664,6 +676,126 @@ button{
   font-size: 0.85rem;
 }
 
+.review-form{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 40vh;
+  background: rgba(255,255,255, 0.96);
+  left: 0;
+  z-index: 999;
+	animation: slide-top 0.5s forwards;
+  box-shadow: 0 -2px 20px rgba(0,0,0, 0.1);
+}
+
+.review-form .form-header{
+  margin-top: 20px;
+  justify-content: space-between;
+  display: flex;
+}
+
+.review-form .spinner{
+  right: 150px;
+  top: 20px;
+}
+
+.review-form button{
+  background: none;
+  border: solid 1px black;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 5px 10px
+}
+
+.review-form div {
+  width: 50%;
+  margin-left: 200px;
+}
+
+.review-form textarea{
+  height: 100%!important;
+  background: none!important;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 0;
+  box-shadow: none!important;
+  margin-top: 20px;
+}
+
+.revform-closed{
+  animation: slide-bottom 0.5s forwards;
+}
+
+.disc-item{
+  white-space: pre-line;
+  padding-right: 30px;
+}
+
+.discussion-form{
+  padding: 20px;
+  padding-right: 30px;
+}
+
+.discussion-form textarea{
+  border: none;
+  border-bottom: solid 1px black!important;
+  border-radius: 0;
+  font-size: 0.9rem;
+  padding-left: 10px;
+  width: 100%;
+  overflow: auto;
+	height: auto;
+  resize: none;
+  box-shadow: none!important;
+  
+}
+
+
+.discussion-form div{
+  text-align: right;
+  margin-top: 10px
+}
+
+.discussion-form button{
+  background: none;
+  border: solid 1px black!important;
+  margin-right: 5px;
+  font-size: 0.9rem;
+  cursor: pointer
+}
+
+.discussion-form .spinner{
+  margin-top: -57px;
+  right: 100px;
+}
+
+.quest-delete{
+  float: right;
+}
+
+.quest-delete .spinner{
+  margin-top: -45px;
+  right: 20px;
+}
+
+@keyframes slide-top {
+  0% {
+    top: 100vh;
+  }
+  100% {
+    top: 40vh;
+  }
+}
+
+@keyframes slide-bottom {
+  0% {
+    top: 40vh;
+  }
+  100% {
+    top: 100vh;
+  }
+}
+
 .reviews div{
   padding-bottom: 5px;
 }
@@ -675,7 +807,8 @@ button{
 }
 
 .show-more{
-  height: 100%!important;
+  max-height: none!important;
+  height: 100%!important
   
 }
 
@@ -683,7 +816,7 @@ button{
   padding-top: 15px;
   font-size: 0.9rem;
   overflow: hidden;
-  height: 140px;
+  max-height: 140px;
   padding-right: 30px;
   white-space: pre-line
 

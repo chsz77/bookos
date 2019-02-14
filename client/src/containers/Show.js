@@ -57,7 +57,8 @@ class Show extends Component {
               <Col>
                 <BookDescription book={book}/>
                 <br/>
-                <BookTabs {...this.props}/>
+                <BookTabs {...this.props} book_id={book.book_id} fetchBook={this.fetchBook.bind(this, book.book_id)}
+                  currentUser={this.props.currentUser}/>
               </Col>
               <Col md="3">
                 <BookInfo book={book}/>

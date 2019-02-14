@@ -7,6 +7,9 @@ import {Elements} from 'react-stripe-elements';
 import CheckoutForm from "../components/CheckoutForm"
 
 class Checkout extends Component {
+  componentDidMount(){
+    window.scrollTo(0,0)
+  }
   
   render(){
     return(

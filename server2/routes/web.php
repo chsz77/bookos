@@ -28,6 +28,7 @@ $router->group(['prefix' => 'api/books'], function () use ($router) {
   
   $router->get('/{book_id}/reviews',  ['uses' => 'ReviewController@showReviews']);
   $router->post('/{book_id}/reviews/{user_id}', ['uses' => 'ReviewController@createReview']);
+  $router->delete('/{book_id}/reviews/{user_id}', ['uses' => 'ReviewController@deleteReview']);
 });
 
 $router->group(['middleware' => 'auth', 'prefix' => 'api/users'], function () use ($router) {
@@ -48,7 +49,11 @@ $router->group(['prefix' => 'api/auth'], function () use ($router) {
 
   $router->post('/signup', ['uses' => 'AuthController@signup']);
   $router->post('/signin', ['uses' => 'AuthController@signin']);
-
-
 });
 
+$router->group(['prefix' => 'api/discussions'], function () use ($router) {
+
+  $router->get('/{book_id}/', ['uses' => 'DiscussionController@showDiscussions']);
+  $router->post('/{book_id}/{user_id}', ['uses' => 'DiscussionController@createDiscussion']);
+  $router->delete('/{discussion_id}', ['uses' => 'DiscussionController@deleteDiscussion']);
+});

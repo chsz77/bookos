@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-do
 
 import Index from "./containers/Index.js"
 import Browser from "./containers/Browser.js"
-import AddBook from "./containers/AddBook.js"
+import Dashboard from "./containers/Dashboard.js"
 import Checkout from "./containers/Checkout.js"
 import Show from "./containers/Show.js"
 import Header from "./containers/Header.js"
@@ -49,7 +49,7 @@ class App extends Component{
               <Route exact path='/' render={() => (<Redirect to="/books"/>)}/>
               <Route exact path='/books' render={props => (<Index {...props}/>)}/>
               <Route exact path='/books/browse' render={props => (<Browser {...props}/>)}/>
-              <Route exact path='/books/new' render={AddBook}/>
+              <Route exact path='/dashboard' render={props => (<Dashboard {...props} currentUser={this.state.currentUser}/>)}/>
               <Route exact path='/signin' render={props => (<Authentication {...props} stateUp={this.stateUp.bind(this)} currentUser={this.state.currentUser}/>)}/>
               <Route exact path='/signup' render={props => (<Authentication {...props} stateUp={this.stateUp.bind(this)} signup currentUser={this.state.currentUser}/>)}/>
               <Route exact path='/checkout' render={props => (<Checkout {...props} currentUser={this.state.currentUser}/>)}/>

@@ -5,8 +5,6 @@ const BookRecommendation = (props) => {
   let rowstyle = {display: 'flex', flexWrap:'wrap'}
   let style = { width: '100%'}
   
-  console.log(props.keyword)
-  
   return(
     <div style={style}>
       <h5>You may also like</h5>
@@ -17,6 +15,7 @@ const BookRecommendation = (props) => {
         styling="book-reco" 
         type="popular"
         book_filter={props.book_filter}
+        tooltip="tooltip"
         keyword={props.keyword && props.keyword.replace(/[|]/g, " ")}/>
     </div>
     

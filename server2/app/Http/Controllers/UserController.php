@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $sql = "SELECT cart_item_id, user_id, added_at, title, author, image_url, price 
             FROM cart_items INNER JOIN books ON cart_items.book_id = books.book_id 
-            WHERE user_id=:user_id AND paid=0";
+            WHERE user_id=:user_id AND paid=0 ORDER BY added_at DESC";
         $result = app('db')->select($sql, [":user_id" => $user_id]);
         return response()->json(["data" => $result]);
     }

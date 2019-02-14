@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {API} from '../config.js';
-import queryString from 'query-string'
+// import queryString from 'query-string'
 import {
   ListGroupItem,
   Button,
@@ -13,11 +13,11 @@ class SearchBar extends Component {
   
   timeout = null
   
-  componentDidMount(){
-    let keyword = queryString.parse(this.props.location.search).keyword
-    if(keyword && keyword.length>0){
-    this.setState({search: keyword})}
-  }
+  // componentDidMount(){
+  //   let keyword = queryString.parse(this.props.location.search).keyword
+  //   if(keyword && keyword.length>0){
+  //   this.setState({search: keyword})}
+  // }
   
   handleInputChange = (e) => {
     clearTimeout(this.timer)

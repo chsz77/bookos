@@ -22,7 +22,7 @@ class ReviewController extends Controller
             FROM reviews 
             LEFT JOIN ratings ON reviews.review_id = ratings.review_id
             LEFT JOIN users ON reviews.user_id = users.user_id
-            WHERE reviews.book_id=$book_id ORDER BY reviews.created_at DESC" . $limit . $offset;
+            WHERE ratings.book_id=$book_id ORDER BY reviews.created_at DESC" . $limit . $offset;
         $result = app('db')->select($sql);
         return response()->json(["data" => $result, "status" => "success"]);
     }
@@ -52,13 +52,15 @@ class ReviewController extends Controller
             ];
             $rating = app('db')->insert($rating_sql, $rating_data);
             
-            $result = [":book_id" => $book_id,
-              ":user_id" => $user_id,
-              ":review_id" => $review_id,
-              ":value" => $request->input('value'),
-              ":text" => $request->input('text')
-              ];
-            return response()->json(["data" => $result, "status" => "success"], 200);
+            
+            $new_review_sql = "SELECT reviews.review_id, text, reviews.created_at, reviews.book_id, value as rating, reviews.user_id, username 
+            FROM reviews 
+            LEFT JOIN ratings ON reviews.review_id = ratings.review_id
+            LEFT JOIN users ON reviews.user_id = users.user_id
+            WHERE reviews.review_id = LAST_INSERT_ID()";
+            $new_review_data = app('db')->select($new_review_sql)[0];
+            
+            return response()->json(["data" => $new_review_data , "status" => "success"], 200);
         }
     }
 

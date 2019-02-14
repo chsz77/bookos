@@ -59,7 +59,7 @@ class BookRow extends Component {
   
   render(){
     const books = this.state.books.map(book => (
-      <Book column={this.props.column} styling={this.props.styling} key={book.book_id} book_id={book.book_id} image_url={book.image_url} author={book.author} title={book.title} published_at={book.published_at}/>
+      <Book column={this.props.column} styling={this.props.styling} key={book.book_id} book_id={book.book_id} image_url={book.image_url} author={book.author} title={book.title} tooltip={this.props.tooltip} published_at={book.published_at}/>
     ))
     
     return(

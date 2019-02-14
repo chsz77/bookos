@@ -44,6 +44,7 @@ class BookSlide extends Component {
         </Col>
         <Col className="showcase">
           <BookRow 
+            tooltip="tooltip"
             limit="12" 
             column="2" 
             rowstyle={rowstyle2} 

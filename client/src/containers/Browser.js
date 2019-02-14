@@ -94,7 +94,7 @@ class Browser extends Component {
     
     let sorts = sortData.map((sort, i) => (
       <li value={sort.type} onClick={this.handleLink} 
-      className={sort.type === this.state.sortActive ? "sort-active" : ""} 
+      className={sort.type.toUpperCase() === this.state.sortActive.toUpperCase() ? "sort-active" : ""} 
       name="type" key={i}>{sort.title}</li>
     ))  
     let genreData = ["Sci-Fi", "Comedy", "Fantasy", "Adventure", "War", "Action", "Romance", "Drama", "Mystery", "Horror", "Thriller", 
@@ -102,7 +102,7 @@ class Browser extends Component {
     ]
     
     let genres = genreData.map( (genre, i) => (
-      <li value={genre} className={`${genre === this.state.genActive ? "sort-active " : ""}genres-list`}  
+      <li value={genre} className={`${genre.toUpperCase() === this.state.genActive.toUpperCase() ? "sort-active " : ""}genres-list`}  
       
       onClick={this.handleLink} name="keyword" key={i}>{genre}</li>
     ))

@@ -25,6 +25,7 @@ class CheckoutForm extends Component {
   
   componentDidMount(){
     let user_id = this.props.currentUser.user_id
+    
     this.fetchCart(user_id)
     this.fetchProfile(user_id)
   }
@@ -144,6 +145,10 @@ class CheckoutForm extends Component {
     
     if(this.state.success){
       return <Paid />
+    }
+    
+    if(!this.props.currentUser.user_id){
+      this.props.history.push("/books")
     }
     
     return(

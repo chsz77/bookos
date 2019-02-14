@@ -5,13 +5,15 @@ import Rating from "react-rating"
 
 
 const Book = (props) => {
-  const {book_id, image_url, title, author, column, price, styling, rating} = props
+  const {book_id, image_url, title, author, column, price, styling, rating, tooltip} = props
 
   return (
     <Col className={styling} md={column} key={book_id}>
       <Link to={`/books/${book_id}`}>
       <Card className='h-100'>
-        <div style={{background: `url(${image_url}) no-repeat center`,  backgroundSize: "cover", height: '100%', width: '100%'} }/>
+        <div
+          title={tooltip === "tooltip" ? title : ""}
+          style={{background: `url(${image_url}) no-repeat center`,  backgroundSize: "cover", height: '100%', width: '100%'} }/>
           <div className="book-desc">
             <p><strong>{title}</strong></p>
             <p className="author">{author}</p>

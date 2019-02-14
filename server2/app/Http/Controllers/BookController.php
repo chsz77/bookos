@@ -69,12 +69,15 @@ class BookController extends Controller
         
     }
 
-    public function showOneBook(Request $request, $id)
+    public function showOneBook(Request $request, $book_id)
     {
-        $book_sql = "SELECT * FROM books WHERE books.book_id=$id";
-        $rating_sql = "SELECT COUNT(value) as count_rating, AVG(value) as rating FROM ratings WHERE book_id=$id";
+        $book_sql = "SELECT * FROM books WHERE books.book_id=$book_id";
+        $rating_sql = "SELECT COUNT(value) as count_rating, AVG(value) as rating FROM ratings WHERE book_id=$book_id";
         $book = app('db')->select($book_sql);
         $rating = app('db')->select($rating_sql);
+        //better way is needed
+        $update_views = app('db')->update("UPDATE books SET views = views + 1 WHERE book_id = $book_id");
+        
         return response()->json(["data" => $book[0], "rating" => $rating[0], "status" => "success"]);
     }
 
