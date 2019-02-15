@@ -63,14 +63,47 @@ class ReviewController extends Controller
             return response()->json(["data" => $new_review_data , "status" => "success"], 200);
         }
     }
-
-    public function update($id, Request $request)
+    
+    public function showUserReviews(Request $request, $user_id){
+        $book_id = $request->get('book');
+        
+        if($book_id){
+           $book_id  = " AND reviews.book_id=$book_id";
+        }
+        
+        $sql = "SELECT title, image_url, reviews.review_id, text, reviews.created_at, reviews.book_id, value as rating FROM reviews 
+            LEFT JOIN ratings ON reviews.review_id = ratings.review_id
+            LEFT JOIN books on reviews.book_id = books.book_id
+            WHERE reviews.user_id=$user_id" . $book_id . " ORDER BY created_at DESC";
+        
+        $reviews = app('db')->select($sql); 
+        return response()->json(["data" => $reviews, "status" => "success"], 200);
+    }
+    
+    
+    public function updateReview(Request $request, $review_id)
     {
-
+        $text =  $request->input('text');
+        $value =  $request->input('value');
+        
+        $upreview_sql = "UPDATE reviews SET text=:text WHERE review_id=$review_id";
+        $upreview = app('db')->update($upreview_sql, [":text" => $text]);
+        $uprating_sql = "UPDATE ratings SET value=:value WHERE review_id=$review_id";
+        $uprating = app('db')->update($uprating_sql, [":value" => $value]);
+        
+        $sql = "SELECT reviews.review_id, text, reviews.created_at, reviews.book_id, value as rating FROM reviews 
+            LEFT JOIN ratings ON reviews.review_id = ratings.review_id
+            WHERE reviews.review_id=$review_id"; 
+        
+        $updated_review = app('db')->select($sql); 
+        
+        return response()->json(["data" => $updated_review, "status" => "success"]);
     }
 
-    public function delete($id)
-    {
-
+    public function deleteReview($review_id)
+    {   
+        $sql = "DELETE FROM reviews WHERE review_id=$review_id";
+        $del_review = app('db')->delete($sql);
+        return response()->json(["data" => $review_id, "status" => "deleted"], 200);
     }
 }

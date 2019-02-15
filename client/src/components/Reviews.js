@@ -35,7 +35,7 @@ class ReviewList extends Component{
 }
 
 class Reviews extends Component {
-  state = {reviews:[], limit:5, offset:0, showForm: false}
+  state = {reviews:[], limit:5, offset:0, showForm: false, reviewed: false, userReview:""}
   timeout = 0
   
   componentDidMount(){
@@ -53,7 +53,7 @@ class Reviews extends Component {
     }
     const userReview = this.state.reviews.filter(review => review.user_id === this.props.currentUser.user_id)[0]
     if(!prevState.reviewed && userReview){
-      this.setState({reviewed: true})
+      this.setState({reviewed: true, userReview: userReview.review_id})
     } else if (prevState.reviewed && !userReview) {
       this.setState({reviewed: false})
     }
@@ -61,7 +61,7 @@ class Reviews extends Component {
   
   loadReviews(){
     let book_id = this.props.match.params.book_id
-    axios.get(`${API}/books/${book_id}/reviews?limit=5&offset=0`)
+    axios.get(`${API}/reviews/${book_id}?limit=5&offset=0`)
       .then(res => {
         let reviews = res.data.data
         if(reviews.length === 0){
@@ -76,7 +76,7 @@ class Reviews extends Component {
       let book_id = this.props.match.params.book_id
       let offset = this.state.offset + this.state.limit
       let limit = this.state.limit
-      axios.get(`${API}/books/${book_id}/reviews?limit=${limit}&offset=${offset}`)
+      axios.get(`${API}/reviews/${book_id}/?limit=${limit}&offset=${offset}`)
         .then(res => {
           let reviews = res.data.data
           if(reviews.length === 0){
@@ -93,13 +93,22 @@ class Reviews extends Component {
   
   toggleForm = e => {
      if(this.state.reviewed && !this.state.showForm){
-       alert("UNDER CONSTRUCTION")
+        this.setState({showForm: !this.state.showForm})
      }
      else if (this.props.currentUser.user_id){
       this.setState({showForm: !this.state.showForm})
     } else {
       this.props.history.push("/signup")
     }
+  }
+  
+  deleteReview = () => {
+    let review_id = this.state.userReview
+      axios.delete(`${API}/reviews/${review_id}`)
+          .then(res => {
+              this.setState({reviews:this.state.reviews.filter(review => review.review_id !== review_id)})
+              this.setState({reviewed: false, userReview:"", showForm: false})
+          })
   }
   
   render(){
@@ -111,12 +120,26 @@ class Reviews extends Component {
       <div>
         {!this.state.showForm &&
           <span ref="addreview" style={{float: 'right', marginTop: "-40px", marginRight: "70px", cursor: "pointer", fontWeight: "bold"}} 
-          onClick={this.toggleForm}>
-          {this.state.reviewed ? "Edit" : "Add"} Review</span>
+          >
+          <span onClick={this.toggleForm}>
+          {this.state.reviewed ? " Your" : "Add"} Review</span>
+          </span>
         }
-        {this.state.showForm &&
+        {this.state.showForm && !this.state.reviewed &&
           <ReviewForm book_id={this.props.book_id} 
             loadNewReview={this.loadNewReview.bind(this)}
+            userId={this.props.currentUser.user_id} 
+            toggle={this.toggleForm.bind(this)}
+            fetchBook={this.props.fetchBook}
+            />  
+        }
+        {this.state.showForm && this.state.reviewed &&
+          <ReviewForm book_id={this.props.book_id} 
+            edit
+            reviewEdit
+            deleteReview = {this.deleteReview.bind(this)}
+            review_id={this.state.userReview}
+            fetchReviews={this.loadReviews.bind(this)}
             userId={this.props.currentUser.user_id} 
             toggle={this.toggleForm.bind(this)}
             fetchBook={this.props.fetchBook}

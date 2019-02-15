@@ -66,7 +66,7 @@ class CheckoutForm extends Component {
   handlePayment = (shipcost) => {
     this.setState({spinConf: true})
     let user_id = this.props.currentUser.user_id
-    
+    let ship_address = this.state.profile.address
     if(this.state.profileModified){
         this.updateProfile(user_id)
     }
@@ -74,8 +74,9 @@ class CheckoutForm extends Component {
     this.props.stripe.createToken({name: this.state.profile.name})
       .then(({token}) => {
         let data = {
-          user_id: user_id, ship_cost: shipcost, 
-          ship_address: this.state.profile.address, 
+          user_id: user_id, 
+          ship_cost: shipcost, 
+          ship_address: ship_address, 
           token: token.id}
           
         axios.post(`${API}/users/${user_id}/checkout`, data)

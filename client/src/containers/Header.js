@@ -53,9 +53,9 @@ class Header extends Component {
             <SearchBar {...this.props}/>
             <Row >
               {currentUser.username ? (
-              
               <NavItem className="auth-buttons">
                 <Row>
+                <Link to="/dashboard"><i className="fas fa-user"></i></Link>  
                 <Cart currentUser={currentUser}/>
                 <button className="signup" onClick={this.logout.bind(this)}>Logout</button>
                 </Row>

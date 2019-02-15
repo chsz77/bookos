@@ -241,11 +241,40 @@ button{
   box-shadow: none!important
 }
 
-.cart-icon i{
-  padding-left: 15px
+.fa-user{
+  color: white;
+  margin-top: 11px;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
+.trans-info{
+  position: fixed;
+  width: 100vw;
+  height: 60vh;
+  z-index: 999;
+  background: rgba(255,255,255, 0.95);
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  box-shadow: 0 -2px 20px rgba(0,0,0, 0.1);
+}
 
+.trans-info table{
+  width: 800px;
+  color: black;
+  margin: auto;
+  margin-top: 30px;
+  max-height: 600px;
+}
+
+.trans-info span{
+  color: black;
+  font-size: 40px;
+  position: fixed;
+  right: 20px;
+  cursor: pointer
+}
 
 .book-tab .nav-item .active{
   border: none!important;

@@ -95,7 +95,7 @@ class UserController extends Controller
             app('db')->update($sql, [":paidbook" => $paidbook]);
           };
           
-          $pay_sql = "UPDATE cart_items SET paid=1, pay_id=:token WHERE user_id=:user_id";
+          $pay_sql = "UPDATE cart_items SET paid=1, pay_id=:token WHERE user_id=:user_id AND paid=0";
           $pay_success = app('db')->update($pay_sql, [":user_id" => $user_id, ":token" => $token]);  
           
           if($pay_success){
@@ -135,5 +135,24 @@ class UserController extends Controller
             return response()->json(["status" => "success", "data" => $cart_item_id], 200);
         }
         return response()->json(["status" => "failed", "data" => "0"], 400);
+    }
+    
+    public function showTransactions(Request $request, $user_id){
+      $sql = "SELECT * FROM payment WHERE user_id=$user_id 
+      ORDER BY created_at DESC";
+      
+      $transactions = app('db')->select($sql);
+      
+      return response()->json(["status" => "success", "data" => $transactions], 200);
+    }
+    
+    public function showTransItems(Request $request, $user_id, $pay_id){
+      $sql = "SELECT title, image_url, price, pay_id FROM cart_items  
+      LEFT JOIN books ON cart_items.book_id = books.book_id 
+      WHERE user_id=:user_id AND pay_id=:pay_id AND paid=1
+      ORDER BY cart_items.added_at DESC";
+      
+      $items = app('db')->select($sql, [":user_id" => $user_id, ":pay_id" => $pay_id]);
+      return response()->json(["status" => "success", "data" => $items], 200);
     }
 }

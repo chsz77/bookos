@@ -26,9 +26,6 @@ $router->group(['prefix' => 'api/books'], function () use ($router) {
 
   $router->put('/{book_id}', ['uses' => 'BookController@updateBook']);
   
-  $router->get('/{book_id}/reviews',  ['uses' => 'ReviewController@showReviews']);
-  $router->post('/{book_id}/reviews/{user_id}', ['uses' => 'ReviewController@createReview']);
-  $router->delete('/{book_id}/reviews/{user_id}', ['uses' => 'ReviewController@deleteReview']);
 });
 
 $router->group(['middleware' => 'auth', 'prefix' => 'api/users'], function () use ($router) {
@@ -41,7 +38,8 @@ $router->group(['middleware' => 'auth', 'prefix' => 'api/users'], function () us
   $router->post('/{user_id}/profile', ['uses' => 'UserController@createProfile']);
   $router->put('/{user_id}/profile', ['uses' => 'UserController@updateProfile']);
 
-  $router->get('/{user_id}/transactions', ['uses' => 'UserController@showTransaction']);
+  $router->get('/{user_id}/transactions', ['uses' => 'UserController@showTransactions']);
+  $router->get('/{user_id}/transactions/{pay_id}', ['uses' => 'UserController@showTransItems']);
   $router->post('/{user_id}/checkout', ['uses' => 'UserController@checkout']);
 });
 
@@ -56,4 +54,13 @@ $router->group(['prefix' => 'api/discussions'], function () use ($router) {
   $router->get('/{book_id}/', ['uses' => 'DiscussionController@showDiscussions']);
   $router->post('/{book_id}/{user_id}', ['uses' => 'DiscussionController@createDiscussion']);
   $router->delete('/{discussion_id}', ['uses' => 'DiscussionController@deleteDiscussion']);
+});
+
+$router->group(['prefix' => 'api/reviews'], function () use ($router) {
+
+  $router->get('/{book_id}',  ['uses' => 'ReviewController@showReviews']);
+  $router->get('/users/{user_id}',  ['uses' => 'ReviewController@showUserReviews']);
+  $router->post('/{book_id}/{user_id}', ['uses' => 'ReviewController@createReview']);
+  $router->delete('/{review_id}', ['uses' => 'ReviewController@deleteReview']);
+  $router->put('/{review_id}', ['uses' => 'ReviewController@updateReview']);
 });

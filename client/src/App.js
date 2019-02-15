@@ -27,12 +27,11 @@ class App extends Component{
   setCurrentUser = () => {
     if(localStorage.jwtToken && Math.floor(Date.now() / 60000) - localStorage.expired < 60 ) {
       let token = localStorage.jwtToken
-      if(token){
-        setTokenHeader(token)
-        let currentUser = jwtDecode(token)
-        this.setState({currentUser, render: true})
-      }
-    } else {
+      localStorage.setItem("expired", Math.floor(Date.now() / 60000));
+      setTokenHeader(token)
+      let currentUser = jwtDecode(token)
+      this.setState({currentUser, render: true})
+      } else {
       localStorage.clear()
       this.setState({currentUser:{}, render: true})
     }
